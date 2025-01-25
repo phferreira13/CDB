@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component } from '@angular/core';
 
 interface WeatherForecast {
   date: string;
@@ -14,22 +14,24 @@ interface WeatherForecast {
   standalone: false,
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+export class AppComponent{
+  initialValue: number = 0;
+  months: number = 0;
+  result: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-    this.getForecasts();
-  }
+  calculate() {
+    const params = new HttpParams()
+      .set('initialValue', this.initialValue.toString())
+      .set('months', this.months.toString());
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe({
-      next: (result) => {
-        this.forecasts = result;
+    this.http.get('/api/cdb', { params }).subscribe({
+      next: (data: any) => {
+        this.result = data;
       },
-      error: (error) => {
-        console.error(error);
+      error: (error: any) => {
+        console.error('Error:', error);
       }
     });
   }

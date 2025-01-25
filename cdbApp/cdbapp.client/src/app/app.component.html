@@ -1,24 +1,21 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
+<div>
+  <h2>Calculadora de CDB</h2>
+  <form (ngSubmit)="calculate()">
+    <div>
+      <label for="initialValue">Valor Inicial:</label>
+      <input type="number" id="initialValue" [(ngModel)]="initialValue" name="initialValue" required>
+    </div>
+    <div>
+      <label for="months">Meses:</label>
+      <input type="number" id="months" [(ngModel)]="months" name="months" required>
+    </div>
+    <button type="submit">Calcular</button>
+  </form>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
+  <div *ngIf="result">
+    <h3>Resultado</h3>
+    <p>Valor Inicial: {{ result.initialValue }}</p>
+    <p>Valor Final: {{ result.finalValue }}</p>
+    <p>Valor Final com Imposto: {{ result.finalValueWithTax }}</p>
+  </div>
+</div>
