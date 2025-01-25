@@ -23,11 +23,6 @@ public class CdbController : ControllerBase
             return StatusCode(StatusCodes.Status400BadRequest, "Initial value and months must be greater than 0");
         }
         var cdb = new Cdb(initialValue, months, _cdbService.GetTb(), _cdbService.GetCdi(), _cdbService.GetTax(months));
-        return Ok(new
-        {
-            initialValue = cdb.InitialValue,
-            finalValue = cdb.FinalValue,
-            finalValueWithTax = cdb.FinalValueWithTax
-        });
+        return Ok(cdb);
     }
 }

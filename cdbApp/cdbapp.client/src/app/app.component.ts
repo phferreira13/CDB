@@ -1,12 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { Component, ViewChild } from '@angular/core';
+import { CdbResult } from '../models/cdbResult.model';
+import { MatTable } from '@angular/material/table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -15,20 +11,34 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent{
-  initialValue: number = 0;
-  months: number = 0;
-  result: any;
+  results: CdbResult[] = [];
+  displayedColumns: string[] = ['initialValue', 'months', 'finalValue', 'finalValueWithTax'];
+
+  valueControl: FormControl = new FormControl(1, [Validators.min(1), Validators.required])
+  monthControl: FormControl = new FormControl(1, [Validators.min(1), Validators.required])
+
+  cdbForm: FormGroup = new FormGroup({
+    initialValue: this.valueControl,
+    months: this.monthControl
+  })
+
+  @ViewChild(MatTable)
+    table!: MatTable<CdbResult>;
 
   constructor(private http: HttpClient) { }
 
   calculate() {
-    const params = new HttpParams()
-      .set('initialValue', this.initialValue.toString())
-      .set('months', this.months.toString());
+    const initialValue = this.valueControl.value;
+    const months = this.monthControl.value;
 
-    this.http.get('/api/cdb', { params }).subscribe({
-      next: (data: any) => {
-        this.result = data;
+    const params = new HttpParams()
+      .set('initialValue', initialValue.toString())
+      .set('months', months.toString());
+
+    this.http.get<CdbResult>('/api/cdb', { params }).subscribe({
+      next: (data: CdbResult) => {
+        this.results.push(data);
+        this.table.renderRows();
       },
       error: (error: any) => {
         console.error('Error:', error);
@@ -36,5 +46,5 @@ export class AppComponent{
     });
   }
 
-  title = 'cdbapp.client';
+  title = 'Calculador de CDB';
 }

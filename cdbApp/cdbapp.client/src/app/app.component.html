@@ -1,21 +1,50 @@
-<div>
-  <h2>Calculadora de CDB</h2>
-  <form (ngSubmit)="calculate()">
-    <div>
-      <label for="initialValue">Valor Inicial:</label>
-      <input type="number" id="initialValue" [(ngModel)]="initialValue" name="initialValue" required>
-    </div>
-    <div>
-      <label for="months">Meses:</label>
-      <input type="number" id="months" [(ngModel)]="months" name="months" required>
-    </div>
-    <button type="submit">Calcular</button>
-  </form>
+<div class="content">
+  <h2>Calculador de CDB</h2>
 
-  <div *ngIf="result">
-    <h3>Resultado</h3>
-    <p>Valor Inicial: {{ result.initialValue }}</p>
-    <p>Valor Final: {{ result.finalValue }}</p>
-    <p>Valor Final com Imposto: {{ result.finalValueWithTax }}</p>
+  <div class="fields">
+    <form [formGroup]="cdbForm">
+      <p>
+        <mat-form-field>
+          <mat-label>Valor inicial</mat-label>
+          <input matInput type="text" [currencyMask]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" formControlName="initialValue">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <mat-label>Quantidade de meses</mat-label>
+          <input matInput type="number" formControlName="months">
+        </mat-form-field>
+      </p>
+      <button mat-flat-button (click)="calculate()" [disabled]="cdbForm.invalid">Calcular</button>
+    </form>
   </div>
+
+    <table mat-table [dataSource]="results" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="initialValue">
+        <th mat-header-cell *matHeaderCellDef> Valor inicial </th>
+        <td mat-cell *matCellDef="let cdb"> {{ cdb.initialValue | currency: 'BRL' : 'symbol' : '3.2-2' }}  </td>
+      </ng-container>
+
+      <ng-container matColumnDef="months">
+        <th mat-header-cell *matHeaderCellDef> Meses </th>
+        <td mat-cell *matCellDef="let cdb"> {{ cdb.months }}  </td>
+      </ng-container>
+
+      <ng-container matColumnDef="finalValue">
+        <th mat-header-cell *matHeaderCellDef> Valor final bruto </th>
+        <td mat-cell *matCellDef="let cdb"> {{cdb.finalValue | currency: 'BRL' : 'symbol' : '3.2-2' }}  </td>
+      </ng-container>
+
+      <ng-container matColumnDef="finalValueWithTax">
+        <th mat-header-cell *matHeaderCellDef> Valor final liquído </th>
+        <td mat-cell *matCellDef="let cdb"> {{cdb.finalValueWithTax | currency: 'BRL' : 'symbol' : '3.2-2' }}  </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+
 </div>
