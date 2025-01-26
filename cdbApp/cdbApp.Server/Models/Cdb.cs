@@ -12,13 +12,17 @@ public class Cdb
 
     public Cdb(decimal initialValue, int months, decimal tb, decimal cdi, decimal tax)
     {
+        if (initialValue <= 0 || months <= 0)
+        {
+            throw new ArgumentException("Initial value and months must be greater than 0");
+        }
         InitialValue = initialValue;
         Months = months;
-        FinalValue = GetFinalValue(tb, cdi);
-        FinalValueWithTax = GetFinalValueWithTax(FinalValue, tax);
+        FinalValue = CalculateFinalValue(tb, cdi);
+        FinalValueWithTax = CalculateFinalValueWithTax(FinalValue, tax);
     }
 
-    private decimal GetFinalValue(decimal tb, decimal cdi)
+    private decimal CalculateFinalValue(decimal tb, decimal cdi)
     {
         decimal finalValue = InitialValue;
 
@@ -29,7 +33,7 @@ public class Cdb
         return finalValue;
     }
 
-    private decimal GetFinalValueWithTax(decimal finalValue, decimal tax)
+    private decimal CalculateFinalValueWithTax(decimal finalValue, decimal tax)
     {
         var grossProfit = finalValue - InitialValue;
         return finalValue - (grossProfit * tax);
