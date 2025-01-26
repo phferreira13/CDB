@@ -13,7 +13,7 @@ public class CdbService : ICdbService
 
     public decimal GetCdi()
     {
-        return _configuration.GetValue<decimal>("CdbSettings:Cdi")/100;
+        return _configuration.GetValue<decimal>("CdbSettings:Cdi") / 100;
     }
 
     public decimal GetTax(int months)

@@ -1,6 +1,5 @@
 ﻿using cdbApp.Server.Interfaces;
 using cdbApp.Server.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cdbApp.Server.Controllers;

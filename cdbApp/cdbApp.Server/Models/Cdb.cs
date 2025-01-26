@@ -1,7 +1,4 @@
-﻿using cdbApp.Server.Interfaces;
-using cdbApp.Server.Services;
-
-namespace cdbApp.Server.Models;
+﻿namespace cdbApp.Server.Models;
 
 public class Cdb
 {
