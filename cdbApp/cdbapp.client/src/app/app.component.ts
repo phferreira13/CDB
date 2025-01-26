@@ -1,12 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, ViewChild } from '@angular/core';
+import { CdbResult } from '../models/cdbResult.model';
+import { MatTable } from '@angular/material/table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,25 +10,52 @@ interface WeatherForecast {
   standalone: false,
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+export class AppComponent{
+  results: CdbResult[] = [];
+  displayedColumns: string[] = ['initialValue', 'months', 'finalValue', 'finalValueWithTax'];
 
-  constructor(private http: HttpClient) {}
+  valueControl: FormControl = new FormControl(1, [Validators.min(1), Validators.required])
+  monthControl: FormControl = new FormControl(1, [Validators.min(1), Validators.required])
 
-  ngOnInit() {
-    this.getForecasts();
-  }
+  cdbForm: FormGroup = new FormGroup({
+    initialValue: this.valueControl,
+    months: this.monthControl
+  })
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
+  @ViewChild(MatTable)
+    table!: MatTable<CdbResult>;
+
+  constructor(private http: HttpClient) { }
+
+  calculate() {
+    const initialValue = this.valueControl.value;
+    const months = this.monthControl.value;
+
+    const params = new HttpParams()
+      .set('initialValue', initialValue.toString())
+      .set('months', months.toString());
+
+    this.http.get<CdbResult>('/api/cdb', { params }).subscribe({
+      next: (data: CdbResult) => {
+        this.results.push(data);
+        this.table.renderRows();
       },
-      (error) => {
-        console.error(error);
+      error: (error: any) => {
+        console.error('Error:', error);
       }
-    );
+    });
   }
 
-  title = 'cdbapp.client';
+  getRowClass(cdb: CdbResult): string {
+    if (cdb.finalValueWithTax < cdb.initialValue) {
+      return 'red-row';
+    } else if (cdb.finalValueWithTax >= cdb.initialValue && cdb.finalValueWithTax <= cdb.initialValue * 1.05) {
+      return 'blue-row';
+    } else if (cdb.finalValueWithTax > cdb.initialValue * 1.05) {
+      return 'green-row';
+    }
+    return '';
+  }
+
+  title = 'Calculador de CDB';
 }
