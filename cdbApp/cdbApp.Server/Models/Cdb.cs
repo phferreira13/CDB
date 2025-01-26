@@ -31,6 +31,7 @@ public class Cdb
 
     private decimal GetFinalValueWithTax(decimal finalValue, decimal tax)
     {
-        return finalValue - (finalValue * tax);
+        var grossProfit = finalValue - InitialValue;
+        return finalValue - (grossProfit * tax);
     }
 }
