@@ -25,7 +25,7 @@ export class AppComponent{
   @ViewChild(MatTable)
     table!: MatTable<CdbResult>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   calculate() {
     const initialValue = this.valueControl.value;

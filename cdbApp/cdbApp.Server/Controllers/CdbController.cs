@@ -16,6 +16,7 @@ public class CdbController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(Cdb), StatusCodes.Status200OK)]
     public IActionResult Get([FromQuery] decimal initialValue, [FromQuery] int months)
     {
         if (initialValue <= 0 || months <= 0)
