@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cdbApp.Server", "cdbApp\cdb
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "cdbapp.client", "cdbApp\cdbapp.client\cdbapp.client.esproj", "{76D86579-1895-4FE3-A159-6E2C1A550999}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3E2DE8D-36DA-49ED-8C01-35D64CC9967C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3E2DE8D-36DA-49ED-8C01-35D64CC9967C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13B1EFE8-1825-41DF-9EAC-B784D8246763}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server.tests", "server.tests\server.tests.csproj", "{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +31,16 @@ Global
 		{76D86579-1895-4FE3-A159-6E2C1A550999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76D86579-1895-4FE3-A159-6E2C1A550999}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76D86579-1895-4FE3-A159-6E2C1A550999}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13B1EFE8-1825-41DF-9EAC-B784D8246763} = {B3E2DE8D-36DA-49ED-8C01-35D64CC9967C}
+		{F50EBB5E-525A-494E-BE50-BFF4B7CBFCDE} = {13B1EFE8-1825-41DF-9EAC-B784D8246763}
 	EndGlobalSection
 EndGlobal
