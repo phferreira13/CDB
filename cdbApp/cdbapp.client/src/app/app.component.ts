@@ -46,5 +46,16 @@ export class AppComponent{
     });
   }
 
+  getRowClass(cdb: CdbResult): string {
+    if (cdb.finalValueWithTax < cdb.initialValue) {
+      return 'red-row';
+    } else if (cdb.finalValueWithTax >= cdb.initialValue && cdb.finalValueWithTax <= cdb.initialValue * 1.05) {
+      return 'blue-row';
+    } else if (cdb.finalValueWithTax > cdb.initialValue * 1.05) {
+      return 'green-row';
+    }
+    return '';
+  }
+
   title = 'Calculador de CDB';
 }

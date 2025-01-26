@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { NgxCurrencyDirective } from "ngx-currency";
 
@@ -35,7 +36,8 @@ registerLocaleData(localePt);
     MatButtonModule,
     MatTableModule,
     NgxCurrencyDirective,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    MatToolbarModule
   ],
   providers: [provideHttpClient(), provideAnimationsAsync(),
     {
